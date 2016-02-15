@@ -247,6 +247,10 @@ let string_of_value vm =
 
 let readint () = let _ = print_string "input> " in read_int() 
 
+let rec dice_roll = function
+  | (0, _)         -> 0
+  | (dice, sides)  -> (Random.int sides) + 1 + dice_roll (dice-1, sides)
+
 let stack_to_heap_item = function 
   | STACK_INT i -> HEAP_INT i
   | STACK_BOOL b -> HEAP_BOOL b
@@ -305,6 +309,7 @@ let do_oper = function
   | (ADD,  STACK_INT m,   STACK_INT n)  -> STACK_INT (m + n)
   | (SUB,  STACK_INT m,   STACK_INT n)  -> STACK_INT (m - n)
   | (MUL,  STACK_INT m,   STACK_INT n)  -> STACK_INT (m * n)
+  | (DICE, STACK_INT m,   STACK_INT n)  -> STACK_INT (dice_roll (m,n))  
   | (op, _, _)  -> Errors.complain ("do_oper: malformed binary operator: " ^ (string_of_oper op))
 
 

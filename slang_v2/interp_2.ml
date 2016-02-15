@@ -211,7 +211,11 @@ let rec search (evs, x) =
   | (EV env) :: rest -> env @ (evs_to_env rest) 
     
     
-let readint () = let _ = print_string "input> " in read_int() 
+let readint () = let _ = print_string "input> " in read_int()
+
+let rec dice_roll = function
+  | (0, _)         -> 0
+  | (dice, sides)  -> (Random.int sides) + 1 + dice_roll (dice-1, sides)
 
 let do_unary = function 
   | (NOT,  BOOL m) -> BOOL (not m)
@@ -228,6 +232,7 @@ let do_oper = function
   | (ADD,  INT m,   INT n)  -> INT (m + n)
   | (SUB,  INT m,   INT n)  -> INT (m - n)
   | (MUL,  INT m,   INT n)  -> INT (m * n)
+  | (DICE, INT m,   INT n)  -> INT (dice_roll (m,n))  
   | (op, _, _)  -> complain ("malformed binary operator: " ^ (string_of_oper op))
 
 (*
