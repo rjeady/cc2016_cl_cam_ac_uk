@@ -42,3 +42,5 @@ seq2 101
 ref1 101
 ref2 101
 ref3 101
+dice1 true
+dice2 true
