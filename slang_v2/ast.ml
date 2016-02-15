@@ -1,7 +1,7 @@
 
 type var = string 
 
-type oper = ADD | MUL | SUB | LT | AND | OR | EQB | EQI
+type oper = ADD | MUL | SUB | LT | AND | OR | EQB | EQI | DICE
 
 type unary_oper = NEG | NOT | READ 
 
@@ -55,6 +55,7 @@ let pp_bop = function
   | EQB   -> "eqb" 
   | AND   -> "&&" 
   | OR   -> "||" 
+  | DICE -> "d"
 
 
 let string_of_oper = pp_bop 
@@ -130,6 +131,7 @@ let string_of_bop = function
   | EQB   -> "EQB" 
   | AND   -> "AND" 
   | OR   -> "OR" 
+  | DICE -> "DICE"
 
 let mk_con con l = 
     let rec aux carry = function 
