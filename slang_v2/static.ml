@@ -116,6 +116,9 @@ let make_bop loc bop (e1, t1) (e2, t2) =
     | EQ,  _,      _      -> report_type_mismatch (e1, t1) (e2, t2) 
     | EQI, _, _           -> internal_error "EQI found in parsed AST"
     | EQB, _, _           -> internal_error "EQB found in parsed AST"
+	| DICE, TEint, TEint  -> (Op(loc, e1, bop, e2), t1)
+    | DICE, TEint,  t      -> report_expecting e2 "integer" t
+    | DICE, t,      _      -> report_expecting e1 "integer" t
 
 let make_while loc (e1, t1) (e2, t2)    = 
     if t1 = TEbool 
