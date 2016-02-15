@@ -16,7 +16,7 @@ let get_loc = Parsing.symbol_start_pos
 %token DICE 
 
 %left ADD SUB                     /* lowest precedence */
-%left MUL ANDOP OROP EQUAL ARROW  LT /* medium precedence */
+%left MUL ANDOP OROP EQUAL ARROW LT /* medium precedence */
 %left DICE
 %left ASSIGN              
 /*
@@ -71,7 +71,7 @@ expr:
 | expr EQUAL expr                    { Past.Op(get_loc(), $1, Past.EQ, $3) }
 | expr ANDOP expr                    { Past.Op(get_loc(), $1, Past.AND, $3) }
 | expr OROP expr                     { Past.Op(get_loc(), $1, Past.OR, $3) }
-| expr DICE exr						 { Past.Op(get_loc(), $1, Past.DICE, $3) }
+| expr DICE expr                     { Past.Op(get_loc(), $1, Past.DICE, $3) }
 | expr ASSIGN expr                   { Past.Assign(get_loc(), $1, $3) }
 | BEGIN exprlist END                 { Past.Seq(get_loc(), $2) }
 | IF expr THEN expr ELSE expr END     { Past.If(get_loc(), $2, $4, $6) }
